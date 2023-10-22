@@ -5,9 +5,9 @@ import chalk from 'chalk';
 
 const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
-const getMicrosoft = async (api) => {
+const getMicrosoft = async (api, location) => {
   try {
-    const hashes = (await fs.readFile(path.join(process.cwd(), 'hashes.txt'), 'utf-8')).split(/\n\r?/);
+    const hashes = (await fs.readFile(location, 'utf-8')).split(/\n\r?/);
     await fs.appendFile(
       path.join(process.cwd(), 'output.csv'),
       `Name,Hash,Category,Engine Name,Engine Version,Result,Method,Engine Update\n`,
@@ -36,7 +36,7 @@ const getMicrosoft = async (api) => {
       }
     }
   } catch (err) {
-    console.error('⛔️', chalk.bold.red('Error:'), 'Unable to read hashes.txt with error message', err.message);
+    console.error('⛔️', chalk.bold.red('Error:'), 'Unable to read the hashes file with error message', err.message);
   }
 };
 

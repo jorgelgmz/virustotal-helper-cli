@@ -10,7 +10,7 @@ import getVendor from './modules/getVendor.js';
   const questions = await inquirer.prompt([
     {
       name: 'api',
-      message: 'Please enter your API Key:',
+      message: '🚀 Please enter your API Key:',
       type: 'password',
       mask: true,
       validate: (questions) => {
@@ -18,8 +18,19 @@ import getVendor from './modules/getVendor.js';
       },
     },
     {
+      type: 'input',
+      name: 'location',
+      message: '📂 Enter the location of a text file containing hashes (./hashes.txt):',
+      validate: (questions) => {
+        if (questions.length === 0) {
+          return 'You must enter a location on your file system.';
+        }
+        return true;
+      },
+    },
+    {
       name: 'operation',
-      message: 'What would you like to do?',
+      message: '🛠️  What would you like to do?',
       type: 'checkbox',
       choices: [
         {
@@ -57,30 +68,30 @@ import getVendor from './modules/getVendor.js';
       {
         type: 'input',
         name: 'vendor',
-        message: 'What vendor would you like to check?',
+        message: '👾 What vendor would you like to check?',
         default() {
           return 'McAfee';
         },
       },
     ]);
-    getOperation(questions.api.toString(), questions.operation.toString(), vendorQuestion.vendor.toString());
+    getOperation(questions.api.toString(), questions.location.toString(), questions.operation.toString(), vendorQuestion.vendor.toString());
   } else {
-    getOperation(questions.api.toString(), questions.operation.toString());
+    getOperation(questions.api.toString(), questions.location.toString(), questions.operation.toString());
   }
 })();
 
-const getOperation = async (api, operation, vendor) => {
+const getOperation = async (api, location, operation, vendor) => {
   if (operation === 'Get all hashes') {
-    await getHashes(api);
+    await getHashes(api, location);
   } else if (operation === 'Check all vendors') {
-    await getAllVendors(api);
+    await getAllVendors(api, location);
   } else if (operation === 'Check SentinelOne') {
-    await getSentinelOne(api);
+    await getSentinelOne(api, location);
   } else if (operation === 'Check CrowdStrike') {
-    await getCrowdStrike(api);
+    await getCrowdStrike(api, location);
   } else if (operation === 'Check Microsoft') {
-    await getMicrosoft(api);
+    await getMicrosoft(api, location);
   } else if (operation === 'Check a specific vendor') {
-    await getVendor(api, vendor);
+    await getVendor(api, location, vendor);
   }
 };

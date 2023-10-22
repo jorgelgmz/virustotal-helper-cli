@@ -9,6 +9,7 @@ Interactive CLI written in Node.js that checks a file of hashes in VirusTotal. T
 ## Requirements
 
 - At least Node.js 18.x
+- [ VirusTotal API Key](https://www.virustotal.com/ " VirusTotal API Key")
 
 ## How to Use
 
@@ -21,3 +22,7 @@ npm start
 ```
 
 - Follow the prompts
+
+## Demo
+
+<img src="img/virustotal-helper-cli.gif" alt="VirusTotal Helper CLI gif" Title="VirusTotal Helper CLI" />

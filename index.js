@@ -5,6 +5,7 @@ import getSentinelOne from './modules/getSentinelOne.js';
 import getCrowdStrike from './modules/getCrowdStrike.js';
 import getMicrosoft from './modules/getMicrosoft.js';
 import getVendor from './modules/getVendor.js';
+import simpleVendor from './modules/simpleVendor.js';
 
 (async () => {
   const questions = await inquirer.prompt([
@@ -51,6 +52,9 @@ import getVendor from './modules/getVendor.js';
         {
           name: 'Check a specific vendor',
         },
+        {
+          name: 'Compare CrowdStrike, SentinelOne, and Microsoft',
+        },
       ],
       validate(questions) {
         if (questions.length < 1) {
@@ -93,5 +97,7 @@ const getOperation = async (api, location, operation, vendor) => {
     await getMicrosoft(api, location);
   } else if (operation === 'Check a specific vendor') {
     await getVendor(api, location, vendor);
+  } else if (operation === 'Compare CrowdStrike, SentinelOne, and Microsoft') {
+    await simpleVendor(api, location);
   }
 };

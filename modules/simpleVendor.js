@@ -7,7 +7,8 @@ const wait = (ms) => new Promise((res) => setTimeout(res, ms));
 
 const simpleVendor = async (api, location) => {
   try {
-    const hashes = (await fs.readFile(location, 'utf-8')).split(/\n\r?/);
+    let hashes = (await fs.readFile(location, 'utf-8')).split(/\n\r?/);
+    hashes = hashes.filter((hash) => hash !== '');
     await fs.appendFile(path.join(process.cwd(), 'output.csv'), `Hash,CrowdStrike,SentinelOne,Microsoft\n`, 'utf-8');
     try {
       const requests = hashes.map(async (hash) => {
